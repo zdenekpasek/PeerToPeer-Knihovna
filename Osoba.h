@@ -11,7 +11,7 @@ using namespace std;
 
 
 class Osoba {
-private:
+protected:
     string jmeno;
     string prijmeni;
     string datumNar;

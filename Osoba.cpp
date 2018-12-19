@@ -4,10 +4,13 @@
 
 #include "Osoba.h"
 
-Osoba::Osoba() {}
+Osoba::Osoba() {
+    jmeno = {};
+    prijmeni = {};
+    datumNar = {};
+}
 
-Osoba::Osoba(const string &jmeno, const string &prijmeni, const string &datumNar) : jmeno(jmeno), prijmeni(prijmeni),
-                                                                                    datumNar(datumNar) {
+Osoba::Osoba(const string &jmeno, const string &prijmeni, const string &datumNar) {
 
     this->jmeno = jmeno;
     this->prijmeni = prijmeni;

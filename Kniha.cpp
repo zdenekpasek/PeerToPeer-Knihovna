@@ -15,14 +15,14 @@ Kniha::Kniha() {
 }
 
 Kniha::Kniha(const string &nazev, const string &autor, const string &zanr, int rokVyd, unsigned int pocStran,
-             const string &jazyk) : nazev(nazev), autor(autor), zanr(zanr), rokVyd(rokVyd), pocStran(pocStran),
-                                    jazyk(jazyk) {
+             const string &jazyk) {
     this->nazev = nazev;
     this->autor = autor;
     this->zanr = zanr;
     this->rokVyd = rokVyd;
     this->pocStran = pocStran;
     this->jazyk = jazyk;
+
 }
 
 //gettery

@@ -28,6 +28,7 @@ public:
     //konstruktor se vsemi parametry
     Kniha(const string &nazev, const string &autor, const string &zanr, int rokVyd, unsigned int pocStran, const string &jazyk);
 
+
     //gettery
     const string &getNazev() const;
     const string &getAutor() const;
