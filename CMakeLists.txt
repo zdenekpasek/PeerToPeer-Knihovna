@@ -3,4 +3,4 @@ project(Semestralka)
 
 set(CMAKE_CXX_STANDARD 14)
 
-add_executable(Semestralka main.cpp Kniha.cpp Kniha.h Osoba.cpp Osoba.h)
+add_executable(Semestralka main.cpp Kniha.cpp Kniha.h Osoba.cpp Osoba.h Vypujcka.cpp Vypujcka.h)
