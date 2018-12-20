@@ -12,7 +12,7 @@ using namespace std;
 
 class Kniha {
 
-private:
+protected:
     string nazev;
     string autor;
     string zanr;

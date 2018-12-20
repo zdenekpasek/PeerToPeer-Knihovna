@@ -22,7 +22,27 @@ int main() {
     string prijmeni;
     string datum;
     string hledanePrijmeni;
-    vector<Osoba *> list;
+
+    string nazev;
+    string autor;
+    string zanr;
+    int rokVyd;
+    int pocStran;
+    string jazyk;
+    vector<Osoba *> listOsob;
+
+    listOsob.push_back(new Osoba("Zdenek", "Pasek", "9.11.1990"));
+    listOsob.push_back(new Osoba("Jan", "Novak", "17.2.1978"));
+    listOsob.push_back(new Osoba("Mirka", "Novotna", "28.1.1987"));
+    listOsob.push_back(new Osoba("Tomas", "Pech", "29.12.1992"));
+    listOsob.push_back(new Osoba("Otakar", "Zmrzlina", "9.11.1966"));
+
+    new Kniha(nazev, autor, zanr, rokVyd, pocStran, jazyk);
+
+
+
+
+
 
     while (konec !=5) {
 
@@ -51,11 +71,9 @@ int main() {
                         cin >> prijmeni;
                         cout << "Zadejte datum narozeni: " << endl;
                         cin >> datum;
-                        list.push_back(new Osoba(jmeno, prijmeni, datum));
+                        listOsob.push_back(new Osoba(jmeno, prijmeni, datum));
 
-                        cout << list.back()->getJmeno() << endl;
-                        cout << list.back()->getPrijmeni() << endl;
-                        cout << list.back()->getDatumNar() << endl;
+                        cout << "Uzivatel uspesne pridan." << endl << endl;
 
                         break;
 
@@ -64,10 +82,10 @@ int main() {
                         cout << "Zadejte prijmeni uzivatele, ktereho chcete odstranit: " << endl;
                         cin >> hledanePrijmeni;
 
-                        for (int i = 0; i < list.size(); i++) {
-                            if (list.at(i)->getPrijmeni() == hledanePrijmeni) {
-                                cout << "Mazu uzivatele " << list.at(i)->getPrijmeni() << endl;
-                                list.erase(list.begin() + i);
+                        for (int i = 0; i < listOsob.size(); i++) {
+                            if (listOsob.at(i)->getPrijmeni() == hledanePrijmeni) {
+                                cout << "Mazu uzivatele " << listOsob.at(i)->getPrijmeni() << endl;
+                                listOsob.erase(listOsob.begin() + i);
                                 break;
                             } else {
                                 cout << "Uzivatel nenalezen." << endl;
@@ -87,10 +105,35 @@ int main() {
 
                 switch (vyber) {
                     case 1:
+                        cout << "Jakemu uzivateli chcete pridat knihu? (zadejte prijmeni)" << endl;
                         cout << "Vypis uzivatelu: " << endl;
+                        for(int i = 0; i < listOsob.size(); i++){
+                            cout <<
+                             listOsob.at(i)->getJmeno() << " " << listOsob.at(i)->getPrijmeni() << endl;
+                        }
+                        cin >> prijmeni;
+
+
+                        cout << "Nazev knihy: " << endl;
+                        cin >> nazev;
+                        cout << "Autor: " << endl;
+                        cin >> autor;
+                        cout << "Zanr: " << endl;
+                        cin >> zanr;
+                        cout << "Rok vydani: " << endl;
+                        cin >> rokVyd;
+                        cout << "Pocet stran: " << endl;
+                        cin >> pocStran;
+                        cout << "Jazyk: " << endl;
+                        cin >> jazyk;
+
+                        new Kniha(nazev, autor, zanr, rokVyd, pocStran, jazyk);
 
 
                         break;
+
+
+
                     case 2:
                         cout << "odstran";
                         break;

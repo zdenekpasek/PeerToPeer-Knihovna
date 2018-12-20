@@ -38,3 +38,13 @@ void Osoba::setPrijmeni(const string &prijmeni) {
 void Osoba::setDatumNar(const string &datumNar) {
     Osoba::datumNar = datumNar;
 }
+
+Osoba::Osoba(const vector<string> &knihFond) : knihFond(knihFond) {}
+
+const vector<string> &Osoba::getKnihFond() const {
+    return knihFond;
+}
+
+void Osoba::setKnihFond(const vector<string> &knihFond) {
+    Osoba::knihFond = knihFond;
+}
