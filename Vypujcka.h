@@ -23,7 +23,8 @@ protected:
 
 public:
     Vypujcka();
-
+    
+    Vypujcka(const string &vypujcitel, const string &neVypujcitel, const string &kniha, const string &odDne, const string &doDne);
     //gettery
     const string &getVypujcitel() const;
     const string &getNeVypujcitel() const;

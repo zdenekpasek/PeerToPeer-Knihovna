@@ -3,11 +3,13 @@
 //
 
 #include "Osoba.h"
+#include "Kniha.h"
 
 Osoba::Osoba() {
     jmeno = {};
     prijmeni = {};
     datumNar = {};
+    knihFond = {};
 }
 
 Osoba::Osoba(const string &jmeno, const string &prijmeni, const string &datumNar) {
@@ -16,6 +18,15 @@ Osoba::Osoba(const string &jmeno, const string &prijmeni, const string &datumNar
     this->prijmeni = prijmeni;
     this->datumNar = datumNar;
 }
+
+Osoba::Osoba(const string &jmeno, const string &prijmeni, const string &datumNar, const vector<string> &knihFond) {
+    
+    this->jmeno = jmeno;
+    this->prijmeni = prijmeni;
+    this->datumNar = datumNar;
+    this->knihFond = knihFond;
+}
+
 //gettery
 const string &Osoba::getJmeno() const {
     return jmeno;
@@ -26,6 +37,7 @@ const string &Osoba::getPrijmeni() const {
 const string &Osoba::getDatumNar() const {
     return datumNar;
 }
+
 
 
 //settery
@@ -48,3 +60,11 @@ const vector<string> &Osoba::getKnihFond() const {
 void Osoba::setKnihFond(const vector<string> &knihFond) {
     Osoba::knihFond = knihFond;
 }
+
+void Osoba::vlozKnihu(){
+    
+
+}
+
+
+

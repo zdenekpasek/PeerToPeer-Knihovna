@@ -44,6 +44,8 @@ public:
     void setRokVyd(int rokVyd);
     void setPocStran(unsigned int pocStran);
     void setJazyk(const string &jazyk);
+    
+    //static void vytvorKnihu();
 
 
 };

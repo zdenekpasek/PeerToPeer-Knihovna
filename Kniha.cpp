@@ -64,3 +64,28 @@ void Kniha::setPocStran(unsigned int pocStran) {
 void Kniha::setJazyk(const string &jazyk) {
     Kniha::jazyk = jazyk;
 }
+
+/*
+void Kniha::vytvorKnihu(){
+    string nazev;
+    string autor;
+    string zanr;
+    int rokVyd;
+    unsigned int pocStran;
+    string jazyk;
+    
+    
+    cout << "Nazev knihy: " << endl;
+    cin >> nazev;
+    cout << "Autor: " << endl;
+    cin >> autor;
+    cout << "Zanr: " << endl;
+    cin >> zanr;
+    cout << "Rok vydani: " << endl;
+    cin >> rokVyd;
+    cout << "Pocet stran: " << endl;
+    cin >> pocStran;
+    cout << "Jazyk: " << endl;
+    cin >> jazyk;
+}
+*/

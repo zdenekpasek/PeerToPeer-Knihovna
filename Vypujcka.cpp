@@ -39,3 +39,12 @@ void Vypujcka::setOdDne(const string &odDne) {
 void Vypujcka::setDoDne(const string &doDne) {
     Vypujcka::doDne = doDne;
 }
+
+
+Vypujcka::Vypujcka(const string &vypujcitel, const string &neVypujcitel, const string &kniha, const string &odDne, const string &doDne){
+    this->vypujcitel = vypujcitel;
+    this->neVypujcitel = neVypujcitel;
+    this->kniha = kniha;
+    this->odDne = odDne;
+    this->doDne = doDne;
+}
