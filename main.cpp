@@ -16,6 +16,7 @@ void ulozVypDoSouboru(vector <Vypujcka *> &list);
 void vytvorVypZeSouboru(vector <Vypujcka *> &list, fstream &file);
 void filtrCtenar(vector <Vypujcka *> &vypu, string jmeno);
 void filtrVypujcitel(vector <Vypujcka *> &vypu, string jmeno);
+void ulozFondDoSouboru(vector <Kniha *> &fond);
 
 
 
@@ -55,6 +56,10 @@ int main() {
     
  
     fond1.push_back(new Kniha("Hamlet", "William Shakespeare", "Drama", 1890, 320, "cz"));
+    fond2.push_back(new Kniha("Navrat Krale", "Tolkien", "Drama", 1990, 402, "eng"));
+    fond3.push_back(new Kniha("Kmotr", "Puzo", "Drama", 1990, 402, "eng"));
+    fond4.push_back(new Kniha("To", "Stephen King", "Drama", 1990, 402, "eng"));
+    fond5.push_back(new Kniha("Test", "Stephen King", "Drama", 1990, 402, "eng"));
     
     
     vypujcky.push_back(new Vypujcka("Pasek", "Novak", "Promena", "1.1.2018", "10.1.2018"));
@@ -66,7 +71,7 @@ int main() {
     
     fstream file("vypujcky.txt");
     int nacti = 0;
-    cout << "Nacteni dat ze souboru (0)" <<endl;
+    cout << "Nacteni data ze souboru (0)" <<endl;
     if(nacti == 1){
         
         while (true) {
@@ -211,7 +216,6 @@ int main() {
                 switch (vyber) {
                     case 1:
                         vypisVypujcky(vypujcky);
-                       
                         break;
                         
                     case 2:
@@ -243,6 +247,10 @@ int main() {
         
         cin >> konec;
     }
+    ulozVypDoSouboru(vypujcky);
+    ulozFondDoSouboru(fond1);
+    ulozFondDoSouboru(fond2);
+    
     cout << "Program ukoncen" << endl;
     
     return 0;
@@ -268,23 +276,42 @@ void vytvorVypZeSouboru(vector <Vypujcka *> &list, fstream &file){
 }
 
 void ulozVypDoSouboru(vector <Vypujcka *> &list){
-    fstream file("vypujcky.txt", ios::out);
+    ofstream file;
+    file.open("vypujcky.txt");
     for(int i = 0; i < list.size(); i++){
         file << list.at(i)->getVypujcitel();
-        cout << " ";
+        file << endl;
         file << list.at(i)->getNeVypujcitel();
-        cout << " ";
+        file << endl;
         file << list.at(i)->getKniha();
-        cout << " ";
+        file << endl;
         file << list.at(i)->getOdDne();
-        cout << " ";
+        file << endl;
         file << list.at(i)->getDoDne();
+        file << endl;
     }
     file << 420;
 }
 
 void ulozFondDoSouboru(vector <Kniha *> &fond){
-    fstream file2("fondy.txt", ios::out);
+    ofstream fondy;
+    fondy.open("fondy.txt");
+    for (int i = 0; i < fond.size(); i++) {
+        fondy << fond.at(i)->getNazev();
+        fondy << endl;
+        fondy << fond.at(i)->getAutor();
+        fondy << endl;
+        fondy << fond.at(i)->getZanr();
+        fondy << endl;
+        fondy << fond.at(i)->getRokVyd();
+        fondy << endl;
+        fondy << fond.at(i)->getPocStran();
+        fondy << endl;
+        fondy << fond.at(i)->getJazyk();
+        fondy << endl;
+       
+    }
+    fondy << 420;
     
 }
 
