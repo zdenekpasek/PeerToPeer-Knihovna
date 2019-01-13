@@ -40,7 +40,10 @@ int main() {
     int rokVyd;
     int pocStran;
     string jazyk;
+    // vytvoreni vectoru pro osoby
     vector<Osoba *> listOsob;
+    
+    // vytvoreni vectoru pro knizni fond, kazda osoba ma svuj vektor
     vector<Kniha *> fond1;
     vector<Kniha *> fond2;
     vector<Kniha *> fond3;
@@ -48,21 +51,21 @@ int main() {
     vector<Kniha *> fond5;
     vector<Vypujcka *> vypujcky;
     
-    
+    // vytvoreni instanci osob a pushnuti do vectoru osob
     listOsob.push_back(new Osoba("Zdenek", "Pasek", "9.11.1990"));
     listOsob.push_back(new Osoba("Jan", "Novak", "17.2.1978"));
     listOsob.push_back(new Osoba("Mirka", "Novotna", "28.1.1987"));
     listOsob.push_back(new Osoba("Tomas", "Pech", "29.12.1992"));
     listOsob.push_back(new Osoba("Otakar", "Zmrzlina", "9.11.1966"));
     
- 
+    // vytvoreni instanci knih a pushnuti do jednotlivych vectoru osob
     fond1.push_back(new Kniha("Hamlet", "William Shakespeare", "Drama", 1890, 320, "cz"));
     fond2.push_back(new Kniha("Navrat Krale", "Tolkien", "Drama", 1990, 402, "eng"));
     fond3.push_back(new Kniha("Kmotr", "Puzo", "Drama", 1990, 402, "eng"));
     fond4.push_back(new Kniha("To", "Stephen King", "Drama", 1990, 402, "eng"));
     fond5.push_back(new Kniha("Test", "Stephen King", "Drama", 1990, 402, "eng"));
 
-    
+    // vytvoreni instanci vypujcek a pushnuti do vectoru vypujcky
     vypujcky.push_back(new Vypujcka("Pasek", "Novak", "Promena", "1.1.2018", "10.1.2018"));
     vypujcky.push_back(new Vypujcka("Zmrzlina", "Pech", "Pohadky", "2.12.2018", "19.12..2018"));
     vypujcky.push_back(new Vypujcka("Pasek", "Pech", "Peklo", "2.12.2018", "19.12..2018"));
@@ -82,6 +85,7 @@ int main() {
             }
     */
   
+    // dokud neni vstup 5, tak vypisuj tohle menu
     while (konec !=5) {
         
         cout << "Co chcete udelat?" << endl;
@@ -105,6 +109,7 @@ int main() {
                 
                 cin >> vyber;
                 
+                // uprava kniznich fondu
                 switch (vyber) {
                     case 1:
                         cout << "Jakemu uzivateli chcete pridat knihu? (zadejte prijmeni)" << endl;
@@ -121,7 +126,8 @@ int main() {
                         cin >> autor;
                         cout << "Zanr: " << endl;
                         cin >> zanr;
-                
+                        
+                        // cin.fail -- k osetreni vstupu, pokud zadam napr. string, zepta se me znovu na vstup
                         do{
                         cout << "Rok vydani: " << endl;
                         cin >> rokVyd;
@@ -139,15 +145,14 @@ int main() {
                         } while(fail == true);
                         cout << "Jazyk: " << endl;
                         cin >> jazyk;
-                    
+                        
+                        // podle prijmeni pridej knihu do knizniho fondu
                         if(hledanePrijmeni == "Pasek"){
                             fond1.push_back(new Kniha(nazev, autor, zanr, rokVyd, pocStran, jazyk));
                              cout << "Kniha uspesne pridana" << endl;
-                        
                         } else if (hledanePrijmeni == "Novak"){
                             fond2.push_back(new Kniha(nazev, autor, zanr, rokVyd, pocStran, jazyk));
                             cout << "Kniha uspesne pridana" << endl;
-                            
                         } else if (hledanePrijmeni == "Novotna"){
                             fond3.push_back(new Kniha(nazev, autor, zanr, rokVyd, pocStran, jazyk));
                              cout << "Kniha uspesne pridana" << endl;
@@ -163,6 +168,7 @@ int main() {
             
                         break;
                         
+                    // odebrani knihy z knizniho fondu podle prijmeni, kazda osoba ma svuj knizni fond
                     case 2:
                         cout << "Jakemu uzivateli chcete odebrat knihu? (zadejte prijmeni)" << endl;
                         cout << "Vypis uzivatelu: " << endl;
@@ -198,6 +204,7 @@ int main() {
                 
                 break;
                 
+            // vypis vypujcek
             case 3:
                 cout << "Vypis vsech vypujcek (1)" << endl;
                 cout << "Vypis vypujcek podle prijmeni vypujcitele (2)" << endl;
@@ -206,11 +213,13 @@ int main() {
                 cin >> vyber;
                 
                 switch (vyber) {
+                    // vypis vsech vypujcek
                     case 1:
                         vypisVypujcky(vypujcky);
                         break;
                         
                     case 2:
+                        // vypis vypujcek podle prijmeni vypujcitele
                         vypisOsob(listOsob);
                         cout << "Zadejte prijmeni: " << endl;
                         cin >> hledanePrijmeni;
@@ -218,6 +227,7 @@ int main() {
                         
                         break;
                     case 3:
+                        // vypis vypujcek podle ctenare
                         cout << "Zadejte prijmeni: " << endl;
                         vypisOsob(listOsob);
                         cin >> hledanePrijmeni;
@@ -254,6 +264,7 @@ int main() {
     
 }
 
+// vytvori vypujcky ze souboru
 void vytvorVypZeSouboru(vector <Vypujcka *> &list, fstream &file){
     string vypujcitel;
     string neVypujcitel;
@@ -276,7 +287,7 @@ void vytvorVypZeSouboru(vector <Vypujcka *> &list, fstream &file){
         list.push_back(new Vypujcka(vypujcitel, neVypujcitel, kniha, odDne, doDne));
     }
 }
-
+// ulozi vypujcky do souboru
 void ulozVypDoSouboru(vector <Vypujcka *> &list){
     ofstream file;
     file.open("vypujcky.txt");
@@ -295,6 +306,7 @@ void ulozVypDoSouboru(vector <Vypujcka *> &list){
     file << "konec";
 }
 
+// ulozi fondy knih do souboru
 void ulozFondDoSouboru(vector <Kniha *> &fond){
     ofstream fondy;
     fondy.open("fondy.txt", ios::out|ios::app);
@@ -313,9 +325,10 @@ void ulozFondDoSouboru(vector <Kniha *> &fond){
         fondy << endl;
     
     }
-    fondy << 999 <<"\n";
+    //fondy << 999 <<"\n";
 }
 
+// vytvori fondy knih ze souboru
 void vytvorFondZeSouboru(vector <Kniha *> &fond, fstream &fondy){
     string nazev;
     string autor;
