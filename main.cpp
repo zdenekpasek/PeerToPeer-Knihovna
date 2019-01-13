@@ -70,9 +70,17 @@ int main() {
     vypujcky.push_back(new Vypujcka("Novotna", "Novak", "Hamlet", "22.4.2018", "28.5.2018"));
     vypujcky.push_back(new Vypujcka("Novotna", "Pasek", "Y O", "22.4.2018", "28.5.2018"));
   
-   
-   
+   /*
+    fstream file;
+    file.open("vypujcky.txt");
+    cout << "Nacteni vypujcek ze souboru (0)" << endl;
+    int moznost;
+    cin >> moznost;
     
+    if(moznost == 0){
+        vytvorVypZeSouboru(vypujcky, file);
+            }
+    */
   
     while (konec !=5) {
         
@@ -105,10 +113,6 @@ int main() {
                         
                         cout << "Prijmeni: ";
                         cin >> hledanePrijmeni;
-                        
-                      
-                        
-                        
                         bool fail;
                         
                         cout << "Nazev knihy: " << endl;
@@ -136,7 +140,6 @@ int main() {
                         cout << "Jazyk: " << endl;
                         cin >> jazyk;
                     
-                        
                         if(hledanePrijmeni == "Pasek"){
                             fond1.push_back(new Kniha(nazev, autor, zanr, rokVyd, pocStran, jazyk));
                              cout << "Kniha uspesne pridana" << endl;
@@ -157,11 +160,8 @@ int main() {
                         } else{
                             cout << "Uzivatel nenalezen" << endl;
                         }
-                        
-                        
+            
                         break;
-                        
-                        
                         
                     case 2:
                         cout << "Jakemu uzivateli chcete odebrat knihu? (zadejte prijmeni)" << endl;
@@ -196,7 +196,6 @@ int main() {
                         }
         }
                 
-                
                 break;
                 
             case 3:
@@ -212,8 +211,8 @@ int main() {
                         break;
                         
                     case 2:
-                        cout << "Zadejte prijmeni: " << endl;
                         vypisOsob(listOsob);
+                        cout << "Zadejte prijmeni: " << endl;
                         cin >> hledanePrijmeni;
                         filtrCtenar(vypujcky, hledanePrijmeni);
                         
@@ -225,12 +224,14 @@ int main() {
                         filtrVypujcitel(vypujcky, hledanePrijmeni);
                         
                         break;
-                        
                 }
                 break;
                 
             case 4:
                 cout << "Zadejte nazev knihy: " << endl;
+                string hledanaKniha;
+                cin >> hledanaKniha;
+                
                 break;
                 
         }
@@ -253,27 +254,28 @@ int main() {
     
 }
 
-
-
 void vytvorVypZeSouboru(vector <Vypujcka *> &list, fstream &file){
     string vypujcitel;
     string neVypujcitel;
     string kniha;
     string odDne;
     string doDne;
+    
+    string line;
    
-   
-        file >> vypujcitel;
+    while (line != "konec") {
+        
+        file >> line;
+        if (line !="konec") {vypujcitel=line;}
+        else break;
         file >> neVypujcitel;
         file >> kniha;
         file >> odDne;
         file >> doDne;
     
-        
         list.push_back(new Vypujcka(vypujcitel, neVypujcitel, kniha, odDne, doDne));
-    
     }
-
+}
 
 void ulozVypDoSouboru(vector <Vypujcka *> &list){
     ofstream file;
@@ -290,7 +292,7 @@ void ulozVypDoSouboru(vector <Vypujcka *> &list){
         file << list.at(i)->getDoDne();
         file << endl;
     }
-    file << 420;
+    file << "konec";
 }
 
 void ulozFondDoSouboru(vector <Kniha *> &fond){
@@ -330,9 +332,9 @@ void vytvorFondZeSouboru(vector <Kniha *> &fond, fstream &fondy){
     fondy >> jazyk;
     
     fond.push_back(new Kniha(nazev, autor, zanr, rokVyd, pocStran, jazyk));
-    
 }
 
+// filtrovany vypis vypujcek podle prijmeni toho, kdo si vypujcil (ctenar)
 void filtrCtenar(vector <Vypujcka *> &vypu, string jmeno){
     
     for(int i = 0; i < vypu.size(); i++){
@@ -342,6 +344,7 @@ void filtrCtenar(vector <Vypujcka *> &vypu, string jmeno){
     }
 }
 
+// filtrovany vypis vypujcek podle prijmeni vypujcitele
 void filtrVypujcitel(vector <Vypujcka *> &vypu, string jmeno){
     
     for(int i = 0; i < vypu.size(); i++){
@@ -351,14 +354,14 @@ void filtrVypujcitel(vector <Vypujcka *> &vypu, string jmeno){
     }
 }
 
-
-
+// vypis vsech vypujcek z vektoru vypujcek
 void vypisVypujcky(vector <Vypujcka *> &vyp){
     for(int i = 0; i < vyp.size(); i++){
         cout << "Vypujcka:" << i << " "<< "Vypujcitel: " <<vyp.at(i)->getVypujcitel() << "   " << "Ctenar: "<< vyp.at(i)->getNeVypujcitel() << "   "<< "Kniha: "<< vyp.at(i)->getKniha()<< "   "<< "Od: "<< vyp.at(i)->getOdDne()<< "   "<< "Do: "<< vyp.at(i)->getDoDne()<< endl;
     }
 }
 
+// vypis vsech osob z vektoru osob
 void vypisOsob(vector <Osoba *> &list){
     for(int i = 0; i < list.size(); i++){
         cout <<
@@ -367,12 +370,14 @@ void vypisOsob(vector <Osoba *> &list){
     cout << string(2, '\n');
 }
 
+// vypsani knih z knizniho fondu
 void vypisFond(vector <Kniha *> &fond){
     for(int i = 0; i < fond.size(); i++){
         cout << "Nazev: " << fond.at(i)->getNazev() << "  " << "Autor: " <<fond.at(i)->getAutor() << endl;
     }
 }
 
+// smazani knihy z knizniho fondu
 void smazKnihu(vector <Kniha *> &fond){
     string hledanaKniha;
     cout << "Zadejte nazev knihy: " << endl;
