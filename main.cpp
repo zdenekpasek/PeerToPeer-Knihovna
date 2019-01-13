@@ -17,6 +17,7 @@ void vytvorVypZeSouboru(vector <Vypujcka *> &list, fstream &file);
 void filtrCtenar(vector <Vypujcka *> &vypu, string jmeno);
 void filtrVypujcitel(vector <Vypujcka *> &vypu, string jmeno);
 void ulozFondDoSouboru(vector <Kniha *> &fond);
+void vytvorFondZeSouboru(vector <Kniha *> &fond, fstream &fondy);
 
 
 
@@ -60,26 +61,18 @@ int main() {
     fond3.push_back(new Kniha("Kmotr", "Puzo", "Drama", 1990, 402, "eng"));
     fond4.push_back(new Kniha("To", "Stephen King", "Drama", 1990, 402, "eng"));
     fond5.push_back(new Kniha("Test", "Stephen King", "Drama", 1990, 402, "eng"));
-    
+
     
     vypujcky.push_back(new Vypujcka("Pasek", "Novak", "Promena", "1.1.2018", "10.1.2018"));
     vypujcky.push_back(new Vypujcka("Zmrzlina", "Pech", "Pohadky", "2.12.2018", "19.12..2018"));
     vypujcky.push_back(new Vypujcka("Pasek", "Pech", "Peklo", "2.12.2018", "19.12..2018"));
     vypujcky.push_back(new Vypujcka("Zmrzlina", "Novotna", "Illuminae", "2.12.2017", "31.12..2017"));
     vypujcky.push_back(new Vypujcka("Novotna", "Novak", "Hamlet", "22.4.2018", "28.5.2018"));
+    vypujcky.push_back(new Vypujcka("Novotna", "Pasek", "Y O", "22.4.2018", "28.5.2018"));
+  
+   
+   
     
-    
-    fstream file("vypujcky.txt");
-    int nacti = 0;
-    cout << "Nacteni data ze souboru (0)" <<endl;
-    if(nacti == 1){
-        
-        while (true) {
-            vytvorVypZeSouboru(vypujcky, file);
-            
-        }
-        
-    }
   
     while (konec !=5) {
         
@@ -268,17 +261,19 @@ void vytvorVypZeSouboru(vector <Vypujcka *> &list, fstream &file){
     string kniha;
     string odDne;
     string doDne;
-    int konec;
+   
+   
+        file >> vypujcitel;
+        file >> neVypujcitel;
+        file >> kniha;
+        file >> odDne;
+        file >> doDne;
     
-    file >> vypujcitel;
-    file >> neVypujcitel;
-    file >> kniha;
-    file >> odDne;
-    file >> doDne;
-    file >> konec;
+        
+        list.push_back(new Vypujcka(vypujcitel, neVypujcitel, kniha, odDne, doDne));
     
-    list.push_back(new Vypujcka(vypujcitel, neVypujcitel, kniha, odDne, doDne));
-}
+    }
+
 
 void ulozVypDoSouboru(vector <Vypujcka *> &list){
     ofstream file;
