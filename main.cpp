@@ -14,7 +14,8 @@ void smazKnihu(vector <Kniha *> &fond);
 void vypisVypujcky(vector <Vypujcka *> &vyp);
 void ulozVypDoSouboru(vector <Vypujcka *> &list);
 void vytvorVypZeSouboru(vector <Vypujcka *> &list, fstream &file);
-
+void filtrCtenar(vector <Vypujcka *> &vypu, string jmeno);
+void filtrVypujcitel(vector <Vypujcka *> &vypu, string jmeno);
 
 
 
@@ -46,9 +47,6 @@ int main() {
     vector<Vypujcka *> vypujcky;
     
     
-    
-    
-    
     listOsob.push_back(new Osoba("Zdenek", "Pasek", "9.11.1990"));
     listOsob.push_back(new Osoba("Jan", "Novak", "17.2.1978"));
     listOsob.push_back(new Osoba("Mirka", "Novotna", "28.1.1987"));
@@ -61,12 +59,14 @@ int main() {
     
     vypujcky.push_back(new Vypujcka("Pasek", "Novak", "Promena", "1.1.2018", "10.1.2018"));
     vypujcky.push_back(new Vypujcka("Zmrzlina", "Pech", "Pohadky", "2.12.2018", "19.12..2018"));
+    vypujcky.push_back(new Vypujcka("Pasek", "Pech", "Peklo", "2.12.2018", "19.12..2018"));
     vypujcky.push_back(new Vypujcka("Zmrzlina", "Novotna", "Illuminae", "2.12.2017", "31.12..2017"));
     vypujcky.push_back(new Vypujcka("Novotna", "Novak", "Hamlet", "22.4.2018", "28.5.2018"));
     
-    fstream file("knihovna.txt");
+    
+    fstream file("vypujcky.txt");
     int nacti = 0;
-    cout << "Nacteni dat ze souboru (1)" <<endl;
+    cout << "Nacteni dat ze souboru (0)" <<endl;
     if(nacti == 1){
         
         while (true) {
@@ -79,7 +79,7 @@ int main() {
     while (konec !=5) {
         
         cout << "Co chcete udelat?" << endl;
-        cout << "Sprava uzivatelu (1)" << endl;
+        cout << "Vypis vech uzivatelu (1)" << endl;
         cout << "Uprava kniznich fondu (2)" << endl;
         cout << "Vypis vypujcek (3)" << endl;
         cout << "Dostupnost knih (4)" << endl << endl;
@@ -87,67 +87,31 @@ int main() {
         cin >> volba;
         
         switch (volba) {
+                
             case 1:
-                cout << string(2, '\n');
-                cout << "Pridani uzivatele (1)" << endl;
-                cout << "Odstraneni uzivatele (2)" << endl;
-                cout << "Vypis vsech uzivatelu (3)" << endl;
+                    cout << "Vypis vsech uzivatelu: " << endl;
+                    vypisOsob(listOsob);
+                    break;
                 
-                cin >> vyber;
-                
-                switch (vyber) {
-                    case 1:
-                        
-                        cout << "Zadejte jmeno: " << endl;
-                        cin >> jmeno;
-                        cout << "Zadejte prijmeni: " << endl;
-                        cin >> prijmeni;
-                        cout << "Zadejte datum narozeni: " << endl;
-                        cin >> datum;
-                        listOsob.push_back(new Osoba(jmeno, prijmeni, datum));
-                        
-                        cout << "Uzivatel uspesne pridan." << endl << endl;
-                        
-                        break;
-                        
-                        
-                    case 2:
-                        cout << "Zadejte prijmeni uzivatele, ktereho chcete odstranit: " << endl;
-                        cin >> hledanePrijmeni;
-                        
-                        for (int i = 0; i < listOsob.size(); i++) {
-                            if (listOsob.at(i)->getPrijmeni() == hledanePrijmeni) {
-                                cout << "Mazu uzivatele " << listOsob.at(i)->getPrijmeni() << endl;
-                                listOsob.erase(listOsob.begin() + i);
-                                break;
-                            } else {
-                                cout << "Uzivatel nenalezen." << endl;
-                            }
-                        }
-                        
-                        break;
-                        
-                    case 3:
-                        cout << "Vypis vsech uzivatelu: " << endl;
-                        vypisOsob(listOsob);
-                        break;
-                        
-                }
-                break;
             case 2:
                 cout << "Pridani knih do fondu uzivatele (1)" << endl;
                 cout << "Odstraneni knih z fondu uzivatele (2)" << endl;
                 
-                
                 cin >> vyber;
-                
                 
                 switch (vyber) {
                     case 1:
                         cout << "Jakemu uzivateli chcete pridat knihu? (zadejte prijmeni)" << endl;
                         cout << "Vypis uzivatelu: " << endl;
                         vypisOsob(listOsob);
+                        
+                        cout << "Prijmeni: ";
                         cin >> hledanePrijmeni;
+                        
+                      
+                        
+                        
+                        bool fail;
                         
                         cout << "Nazev knihy: " << endl;
                         cin >> nazev;
@@ -155,10 +119,22 @@ int main() {
                         cin >> autor;
                         cout << "Zanr: " << endl;
                         cin >> zanr;
+                
+                        do{
                         cout << "Rok vydani: " << endl;
                         cin >> rokVyd;
+                            fail = cin.fail();
+                            cin.clear();
+                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                        } while(fail == true);
+                        
+                        do{
                         cout << "Pocet stran: " << endl;
                         cin >> pocStran;
+                            fail = cin.fail();
+                            cin.clear();
+                            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                        } while(fail == true);
                         cout << "Jazyk: " << endl;
                         cin >> jazyk;
                     
@@ -242,15 +218,15 @@ int main() {
                         cout << "Zadejte prijmeni: " << endl;
                         vypisOsob(listOsob);
                         cin >> hledanePrijmeni;
+                        filtrCtenar(vypujcky, hledanePrijmeni);
                         
-                        
-                        
-                        cout << "Vypujcka 20" << endl;
                         break;
                     case 3:
                         cout << "Zadejte prijmeni: " << endl;
+                        vypisOsob(listOsob);
+                        cin >> hledanePrijmeni;
+                        filtrVypujcitel(vypujcky, hledanePrijmeni);
                         
-                        cout << "Vypujcka 30" << endl;
                         break;
                         
                 }
@@ -273,6 +249,8 @@ int main() {
     
 }
 
+
+
 void vytvorVypZeSouboru(vector <Vypujcka *> &list, fstream &file){
     string vypujcitel;
     string neVypujcitel;
@@ -290,7 +268,7 @@ void vytvorVypZeSouboru(vector <Vypujcka *> &list, fstream &file){
 }
 
 void ulozVypDoSouboru(vector <Vypujcka *> &list){
-    fstream file("knihovna.txt", ios::out);
+    fstream file("vypujcky.txt", ios::out);
     for(int i = 0; i < list.size(); i++){
         file << list.at(i)->getVypujcitel();
         cout << " ";
@@ -305,17 +283,34 @@ void ulozVypDoSouboru(vector <Vypujcka *> &list){
     file << 420;
 }
 
-void filtrPrijmeni(vector <Vypujcka *> &vypu){
+void ulozFondDoSouboru(vector <Kniha *> &fond){
+    fstream file2("fondy.txt", ios::out);
+    
+}
+
+void filtrCtenar(vector <Vypujcka *> &vypu, string jmeno){
     
     for(int i = 0; i < vypu.size(); i++){
-        cout << "Vypujcitel: " <<vypu.at(i)->getVypujcitel() << " " << "Ctenar: "<< vypu.at(i)->getNeVypujcitel() << endl;
+        if(vypu.at(i)->getNeVypujcitel() == jmeno){
+            cout << "Kniha: " <<vypu.at(i)->getKniha() << " Vypujceno od: "<<vypu.at(i)->getVypujcitel() << " Od: "<< vypu.at(i)->getOdDne() << " Do: " << vypu.at(i)->getDoDne() << endl;
+        }
+    }
+}
+
+void filtrVypujcitel(vector <Vypujcka *> &vypu, string jmeno){
+    
+    for(int i = 0; i < vypu.size(); i++){
+        if(vypu.at(i)->getVypujcitel() == jmeno){
+            cout << "Kniha: " <<vypu.at(i)->getKniha() << " Komu: "<<vypu.at(i)->getNeVypujcitel() << " Od: "<< vypu.at(i)->getOdDne() << " Do: " << vypu.at(i)->getDoDne() << endl;
+        }
     }
 }
 
 
+
 void vypisVypujcky(vector <Vypujcka *> &vyp){
     for(int i = 0; i < vyp.size(); i++){
-        cout << "Vypujcitel: " <<vyp.at(i)->getVypujcitel() << " " << "Ctenar: "<< vyp.at(i)->getNeVypujcitel() << endl;
+        cout << "Vypujcka:" << i << " "<< "Vypujcitel: " <<vyp.at(i)->getVypujcitel() << "   " << "Ctenar: "<< vyp.at(i)->getNeVypujcitel() << "   "<< "Kniha: "<< vyp.at(i)->getKniha()<< "   "<< "Od: "<< vyp.at(i)->getOdDne()<< "   "<< "Do: "<< vyp.at(i)->getDoDne()<< endl;
     }
 }
 
