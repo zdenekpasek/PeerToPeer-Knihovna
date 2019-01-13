@@ -250,6 +250,9 @@ int main() {
     ulozVypDoSouboru(vypujcky);
     ulozFondDoSouboru(fond1);
     ulozFondDoSouboru(fond2);
+    ulozFondDoSouboru(fond3);
+    ulozFondDoSouboru(fond4);
+    ulozFondDoSouboru(fond5);
     
     cout << "Program ukoncen" << endl;
     
@@ -295,7 +298,7 @@ void ulozVypDoSouboru(vector <Vypujcka *> &list){
 
 void ulozFondDoSouboru(vector <Kniha *> &fond){
     ofstream fondy;
-    fondy.open("fondy.txt");
+    fondy.open("fondy.txt", ios::out|ios::app);
     for (int i = 0; i < fond.size(); i++) {
         fondy << fond.at(i)->getNazev();
         fondy << endl;
