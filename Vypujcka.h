@@ -22,18 +22,20 @@ protected:
 
 
 public:
+    // defaultni konstruktor
     Vypujcka();
     
+    // konstruktor se vsemi atributami
     Vypujcka(const string &vypujcitel, const string &neVypujcitel, const string &kniha, const string &odDne, const string &doDne);
-    //gettery
+    
+    // gettery
     const string &getVypujcitel() const;
     const string &getNeVypujcitel() const;
     const string &getKniha() const;
     const string &getOdDne() const;
     const string &getDoDne() const;
 
-
-    //settery
+    // settery
     void setVypujcitel(const string &vypujcitel);
     void setNeVypujcitel(const string &neVypujcitel);
     void setKniha(const string &kniha);

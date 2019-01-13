@@ -25,9 +25,8 @@ public:
     //defaultni konstruktor
     Kniha();
 
-    //konstruktor se vsemi parametry
+    //konstruktor se vsemi atributami
     Kniha(const string &nazev, const string &autor, const string &zanr, int rokVyd, unsigned int pocStran, const string &jazyk);
-
 
     //gettery
     const string &getNazev() const;
@@ -45,7 +44,7 @@ public:
     void setPocStran(unsigned int pocStran);
     void setJazyk(const string &jazyk);
     
-    //static void vytvorKnihu();
+    
 
 
 };

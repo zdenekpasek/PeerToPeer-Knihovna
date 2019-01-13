@@ -16,9 +16,8 @@ void ulozVypDoSouboru(vector <Vypujcka *> &list);
 void vytvorVypZeSouboru(vector <Vypujcka *> &list, fstream &file);
 void filtrCtenar(vector <Vypujcka *> &vypu, string jmeno);
 void filtrVypujcitel(vector <Vypujcka *> &vypu, string jmeno);
-void ulozFondDoSouboru(vector <Kniha *> &fond);
 void vytvorFondZeSouboru(vector <Kniha *> &fond, fstream &fondy);
-
+void ulozFondDoSouboru(vector <Kniha *> &fond, ofstream &soubor, string txt);
 
 
 int main() {
@@ -58,7 +57,7 @@ int main() {
     listOsob.push_back(new Osoba("Tomas", "Pech", "29.12.1992"));
     listOsob.push_back(new Osoba("Otakar", "Zmrzlina", "9.11.1966"));
     
-    // vytvoreni instanci knih a pushnuti do jednotlivych vectoru osob
+    // vytvoreni prikladu instanci knih a pushnuti do jednotlivych fondu osob
     fond1.push_back(new Kniha("Hamlet", "William Shakespeare", "Drama", 1890, 320, "cz"));
     fond2.push_back(new Kniha("Navrat Krale", "Tolkien", "Drama", 1990, 402, "eng"));
     fond3.push_back(new Kniha("Kmotr", "Puzo", "Drama", 1990, 402, "eng"));
@@ -84,7 +83,14 @@ int main() {
         vytvorVypZeSouboru(vypujcky, file);
             }
     */
-  
+    
+    // vytvoreni ofstreamu pro zapis do souboru
+    ofstream file1;
+    ofstream file2;
+    ofstream file3;
+    ofstream file4;
+    ofstream file5;
+ 
     // dokud neni vstup 5, tak vypisuj tohle menu
     while (konec !=5) {
         
@@ -92,7 +98,7 @@ int main() {
         cout << "Vypis vech uzivatelu (1)" << endl;
         cout << "Uprava kniznich fondu (2)" << endl;
         cout << "Vypis vypujcek (3)" << endl;
-        cout << "Dostupnost knih (4)" << endl << endl;
+        cout << endl;
         cout << "Ukoncit program (5)" << endl;
         cin >> volba;
         
@@ -102,7 +108,6 @@ int main() {
                     cout << "Vypis vsech uzivatelu: " << endl;
                     vypisOsob(listOsob);
                     break;
-                
             case 2:
                 cout << "Pridani knih do fondu uzivatele (1)" << endl;
                 cout << "Odstraneni knih z fondu uzivatele (2)" << endl;
@@ -201,7 +206,6 @@ int main() {
                             
                         }
         }
-                
                 break;
                 
             // vypis vypujcek
@@ -228,22 +232,14 @@ int main() {
                         break;
                     case 3:
                         // vypis vypujcek podle ctenare
-                        cout << "Zadejte prijmeni: " << endl;
                         vypisOsob(listOsob);
+                        cout << "Zadejte prijmeni: " << endl;
                         cin >> hledanePrijmeni;
                         filtrVypujcitel(vypujcky, hledanePrijmeni);
                         
                         break;
                 }
                 break;
-                
-            case 4:
-                cout << "Zadejte nazev knihy: " << endl;
-                string hledanaKniha;
-                cin >> hledanaKniha;
-                
-                break;
-                
         }
         
         cout <<"Chcete pokracovat? (1)"<< endl;
@@ -252,11 +248,11 @@ int main() {
         cin >> konec;
     }
     ulozVypDoSouboru(vypujcky);
-    ulozFondDoSouboru(fond1);
-    ulozFondDoSouboru(fond2);
-    ulozFondDoSouboru(fond3);
-    ulozFondDoSouboru(fond4);
-    ulozFondDoSouboru(fond5);
+    ulozFondDoSouboru(fond1, file1, "fond1.txt");
+    ulozFondDoSouboru(fond2, file2, "fond2.txt");
+    ulozFondDoSouboru(fond3, file3, "fond3.txt");
+    ulozFondDoSouboru(fond4, file4, "fond4.txt");
+    ulozFondDoSouboru(fond5, file5, "fond5.txt");
     
     cout << "Program ukoncen" << endl;
     
@@ -304,32 +300,35 @@ void ulozVypDoSouboru(vector <Vypujcka *> &list){
         file << endl;
     }
     file << "konec";
+    file.close();
 }
 
 // ulozi fondy knih do souboru
-void ulozFondDoSouboru(vector <Kniha *> &fond){
-    ofstream fondy;
-    fondy.open("fondy.txt", ios::out|ios::app);
+void ulozFondDoSouboru(vector <Kniha *> &fond, ofstream &soubor, string txt){
+  
+    soubor.open(txt, ios::out);
     for (int i = 0; i < fond.size(); i++) {
-        fondy << fond.at(i)->getNazev();
-        fondy << endl;
-        fondy << fond.at(i)->getAutor();
-        fondy << endl;
-        fondy << fond.at(i)->getZanr();
-        fondy << endl;
-        fondy << fond.at(i)->getRokVyd();
-        fondy << endl;
-        fondy << fond.at(i)->getPocStran();
-        fondy << endl;
-        fondy << fond.at(i)->getJazyk();
-        fondy << endl;
+        soubor << fond.at(i)->getNazev();
+        soubor << endl;
+        soubor << fond.at(i)->getAutor();
+        soubor << endl;
+        soubor << fond.at(i)->getZanr();
+        soubor << endl;
+        soubor << fond.at(i)->getRokVyd();
+        soubor << endl;
+        soubor << fond.at(i)->getPocStran();
+        soubor << endl;
+        soubor << fond.at(i)->getJazyk();
+        soubor << endl;
     
     }
     //fondy << 999 <<"\n";
+    soubor.close();
 }
 
 // vytvori fondy knih ze souboru
 void vytvorFondZeSouboru(vector <Kniha *> &fond, fstream &fondy){
+    
     string nazev;
     string autor;
     string zanr;
