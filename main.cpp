@@ -268,12 +268,14 @@ void vytvorVypZeSouboru(vector <Vypujcka *> &list, fstream &file){
     string kniha;
     string odDne;
     string doDne;
+    int konec;
     
     file >> vypujcitel;
     file >> neVypujcitel;
     file >> kniha;
     file >> odDne;
     file >> doDne;
+    file >> konec;
     
     list.push_back(new Vypujcka(vypujcitel, neVypujcitel, kniha, odDne, doDne));
 }
@@ -312,9 +314,27 @@ void ulozFondDoSouboru(vector <Kniha *> &fond){
         fondy << endl;
         fondy << fond.at(i)->getJazyk();
         fondy << endl;
-       
+    
     }
-    fondy << 420;
+    fondy << 999 <<"\n";
+}
+
+void vytvorFondZeSouboru(vector <Kniha *> &fond, fstream &fondy){
+    string nazev;
+    string autor;
+    string zanr;
+    int rokVyd;
+    unsigned int pocStran;
+    string jazyk;
+    
+    fondy >> nazev;
+    fondy >> autor;
+    fondy >> zanr;
+    fondy >> rokVyd;
+    fondy >> pocStran;
+    fondy >> jazyk;
+    
+    fond.push_back(new Kniha(nazev, autor, zanr, rokVyd, pocStran, jazyk));
     
 }
 
